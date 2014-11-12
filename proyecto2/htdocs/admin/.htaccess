@@ -1,0 +1,23 @@
+AuthType Basic
+AuthUserFile /nasshare/webs/proyecto2/htdocs/admin/.htpasswd
+AuthName "Members only area. Please identify yourself:"
+require valid-user
+################################################
+DirectoryIndex index.php
+
+Order deny,allow
+deny from all
+
+## PROTECT SECRET.PHP BUT NOT INDEX.PHP
+<Files ~ "index\.(html|php)"> 
+     Order allow,deny
+     allow from all
+</Files>
+<Files ~ "secret\.(html|php)"> 
+     Order deny,allow 
+     deny from all
+     allow from 192.168.2.40
+</Files>
+
+RewriteEngine On
+RewriteRule ^(.+)\.html$ $1.php
